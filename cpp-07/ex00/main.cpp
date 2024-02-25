@@ -5,27 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/25 02:34:58 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/25 03:29:52 by picatrai         ###   ########.fr       */
+/*   Created: 2024/02/24 05:52:10 by picatrai          #+#    #+#             */
+/*   Updated: 2024/02/25 02:32:12 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "whatever.hpp"
 #include <iostream>
-#include "iter.hpp"
-#include <cstring>
-
-template<typename t>
-void ft_put_array(t& str)
-{
-    std::cout << str << std::endl;
-}
 
 int main(void)
 {
-    std::string array1[] = {"salut", "bonjour", "coucou"};
-    int array2[] = {1, 3, 4, -2};
-    
-    ::iter(array1, sizeof(array1) / sizeof(array1[0]), &ft_put_array);
-    ::iter(array2, sizeof(array2) / sizeof(array2[0]), &ft_put_array);
+    int a = 2;
+    int b = 3;
+    ::swap( a, b );
+    std::cout << "a = " << a << ", b = " << b << std::endl;
+    std::cout << "min( a, b ) = " << ::min( a, b ) << std::endl;
+    std::cout << "max( a, b ) = " << ::max( a, b ) << std::endl;
+    std::string c = "chaine1";
+    std::string d = "chaine2";
+    ::swap(c, d);
+    std::cout << "c = " << c << ", d = " << d << std::endl;
+    std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
+    std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
     return (0);
 }
