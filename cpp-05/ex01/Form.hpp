@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 02:53:37 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 04:25:44 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:12:25 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,23 @@ class Form
         Form& operator=(const Form& cpy);
         ~Form();
 
-        const std::string getName() const;
+        std::string getName() const;
         std::string getSigned() const;
         int getGradeToSign() const;
         int getGradeToExec() const;
 
         void beSigned(const Bureaucrat& obj);
-        
 
         class GradeTooHighException : std::exception
         {
+            public:
+                virtual const char* what() const throw() { return "the grade is too high"; }
         };
 
         class GradeTooLowException : std::exception
         {
+            public:
+                virtual const char* what() const throw() { return "the grade is too low"; }
         };
 };
 

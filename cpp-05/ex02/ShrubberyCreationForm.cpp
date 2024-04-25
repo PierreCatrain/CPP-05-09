@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 04:54:26 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 06:42:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:49:02 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 void ShrubberyCreationForm::execute(const Bureaucrat& executor) const
 {
     this->canExec(executor);
-    	std::ofstream out;
+    std::ofstream out;
 
 	out.open(this->getName().c_str(), std::ofstream::trunc);
 

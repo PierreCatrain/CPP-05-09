@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 04:54:33 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 06:24:55 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:33:29 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class ShrubberyCreationForm : public AForm
         ShrubberyCreationForm& operator=(const ShrubberyCreationForm& cpy);
         ~ShrubberyCreationForm();
 
-        void execute(const Bureaucrat& executor) const;
+        virtual void execute(const Bureaucrat& executor) const;
 };
 
 #endif

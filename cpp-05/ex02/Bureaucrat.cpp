@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 04:32:39 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 06:55:23 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:29:27 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ Bureaucrat::~Bureaucrat()
 {
 }
 
-const std::string Bureaucrat::getName() const
+std::string Bureaucrat::getName() const
 {
     return (this->_name);
 }

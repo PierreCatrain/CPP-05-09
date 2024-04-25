@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 04:32:19 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 06:55:55 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:41:41 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,44 +18,40 @@
 
 int main(void)
 {
-    Bureaucrat* Worker = new Bureaucrat("David", 5);
-    ShrubberyCreationForm* A = new ShrubberyCreationForm("test");
-    RobotomyRequestForm* B = new RobotomyRequestForm("robo");
-    PresidentialPardonForm* C = new PresidentialPardonForm("president");
     try
     {
-        std::cout << *Worker << std::endl;
-        Worker->signForm(*A);
-        Worker->signForm(*B);
-        Worker->signForm(*C);
-        Worker->executeForm(*B);
-        A->execute(*Worker);
-        B->execute(*Worker);
-        C->execute(*Worker);
+        Bureaucrat Worker = Bureaucrat("David", 5);
+        ShrubberyCreationForm A = ShrubberyCreationForm("test");
+        RobotomyRequestForm B = RobotomyRequestForm("robo");
+        PresidentialPardonForm C = PresidentialPardonForm("president");
+        std::cout << Worker << std::endl;
+        Worker.signForm(A);
+        Worker.signForm(B);
+        Worker.signForm(C);
+        Worker.executeForm(B);
+        A.execute(Worker);
+        B.execute(Worker);
+        C.execute(Worker);
     }
     catch (Bureaucrat::GradeTooHighException& e)
     {
-        std::cout << "the grade is too high (max is 1)" << std::endl;
+        std::cout << e.what() << std::endl;
     }
     catch (Bureaucrat::GradeTooLowException& e)
     {
-        std::cout << "the grade is too low (min is 150)" << std::endl;
+        std::cout << e.what() << std::endl;
     }
     catch (AForm::GradeTooHighException& e)
     {
-        std::cout << "the grade is too high" << std::endl;
+        std::cout << e.what() << std::endl;
     }
     catch (AForm::GradeTooLowException& e)
     {
-        std::cout << "the grade is too low" << std::endl;
+        std::cout << e.what() << std::endl;
     }
     catch (AForm::NotSignedException& e)
     {
-        std::cout << "is not signed" << std::endl;
+        // std::cout << e.what() << std::endl;
     }
-    delete Worker;
-    delete A;
-    delete B;
-    delete C;
     return (0);
 }

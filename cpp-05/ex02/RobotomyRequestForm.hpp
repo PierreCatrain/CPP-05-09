@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 04:54:59 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 06:25:58 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:33:40 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ class RobotomyRequestForm : public AForm
         RobotomyRequestForm& operator=(const RobotomyRequestForm& cpy);
         ~RobotomyRequestForm();
 
-        void execute(const Bureaucrat& executor) const;
+        virtual void execute(const Bureaucrat& executor) const;
 };
 
 #endif

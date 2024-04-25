@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 02:53:34 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 04:29:50 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:35:30 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ Form::~Form()
 {
 }
 
-const std::string Form::getName() const
+std::string Form::getName() const
 {
     return (this->_name);
 }

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 04:55:20 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 06:26:09 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/25 19:33:46 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class PresidentialPardonForm : public AForm
         PresidentialPardonForm& operator=(const PresidentialPardonForm& cpy);
         ~PresidentialPardonForm();
 
-        void execute(const Bureaucrat& executor) const;
+        virtual void execute(const Bureaucrat& executor) const;
 };
 
 #endif

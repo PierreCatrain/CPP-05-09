@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 01:00:10 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 05:18:32 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:17:01 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,24 @@ int main(int argc, char **argv)
         std::cout << "enter the grade you want" << std::endl;
         return (1);
     }
-    Bureaucrat *Worker = new Bureaucrat("David", atoi(argv[1]));
+    Bureaucrat Worker;
     try
     {
-        std::cout << *Worker << std::endl;
+        Worker = Bureaucrat("David", atoi(argv[1]));
+        std::cout << Worker << std::endl;
         for (int i = 0; i < 50; i++)
         {
-            Worker->DecrementGrade();
-            std::cout << *Worker << std::endl;
+            Worker.IncrementGrade();
+            std::cout << Worker << std::endl;
         }
-        delete Worker;
     }
     catch (Bureaucrat::GradeTooHighException& e)
     {
-        std::cout << "the grade is too high (max is 1)" << std::endl;
+        std::cout << e.what() << std::endl;
     }
     catch (Bureaucrat::GradeTooLowException& e)
     {
-        std::cout << "the grade is too low (min is 150)" << std::endl;
+        std::cout << e.what() << std::endl;
     }
-    delete Worker;
     return (0);
 }
