@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 04:33:45 by picatrai          #+#    #+#             */
-/*   Updated: 2024/04/25 19:23:16 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/27 23:21:22 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void AForm::canExec(const Bureaucrat& obj) const
 {
     if (this->_signed == false)
     {
-        std::cout << obj.getName() << " can't execute " << this->_name << " because it ";
+        std::cout << obj.getName() << " can't execute " << this->_name << " because ";
         throw AForm::NotSignedException();
     }
     if (obj.getGrade() > this->_grade_to_exec)

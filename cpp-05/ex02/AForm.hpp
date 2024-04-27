@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 04:33:58 by picatrai          #+#    #+#             */
-/*   Updated: 2024/04/25 19:23:06 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/27 23:15:55 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ class AForm
         void canExec(const Bureaucrat& obj) const;
 
         virtual void execute(const Bureaucrat& executor) const = 0;
-        
+
 
         class GradeTooHighException : std::exception
         {
@@ -61,6 +61,8 @@ class AForm
 
         class NotSignedException : std::exception
         {
+             public:
+                virtual const char* what() const throw() { return "the form is not signed"; }
         };
 };
 

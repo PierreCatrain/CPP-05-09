@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 04:32:19 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 07:37:46 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/27 23:28:23 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,34 @@
 
 int main(void)
 {
-    Intern* slave = new Intern();
-    AForm* A;
-    AForm* B;
+    AForm *A;
+    AForm *B;
     try
     {
-        A = slave->makeForm("asfdasdfasdfasdfas", "alors");
-        B = slave->makeForm("RobotomyRequestForm", "test");
+        Intern slave = Intern();
+        A = slave.makeForm("asfdasdfasdfasdfas", "alors");
+        B = slave.makeForm("RobotomyRequestForm", "test");
     }
     catch (Bureaucrat::GradeTooHighException& e)
     {
-        std::cout << "the grade is too high (max is 1)" << std::endl;
+        std::cout << e.what() << std::endl;
     }
     catch (Bureaucrat::GradeTooLowException& e)
     {
-        std::cout << "the grade is too low (min is 150)" << std::endl;
+        std::cout << e.what() << std::endl;
     }
     catch (AForm::GradeTooHighException& e)
     {
-        std::cout << "the grade is too high" << std::endl;
+        std::cout << e.what() << std::endl;
     }
     catch (AForm::GradeTooLowException& e)
     {
-        std::cout << "the grade is too low" << std::endl;
+        std::cout << e.what() << std::endl;
     }
     catch (AForm::NotSignedException& e)
     {
-        std::cout << "is not signed" << std::endl;
+        std::cout << e.what() << std::endl;
     }
-    delete slave;
     delete A;
     delete B;
     return (0);

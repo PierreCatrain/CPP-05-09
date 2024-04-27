@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 04:32:30 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 06:54:29 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/27 23:23:53 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ class Bureaucrat
         Bureaucrat& operator=(const Bureaucrat& cpy);
         ~Bureaucrat();
 
-        const std::string getName() const;
+        std::string getName() const;
         int getGrade() const;
         void IncrementGrade();
         void DecrementGrade();
@@ -46,10 +46,14 @@ class Bureaucrat
 
         class GradeTooLowException : public std::exception
         {
+            public:
+                virtual const char* what() const throw() { return "Grade too low"; }
         };
 
         class GradeTooHighException : public std::exception
         {
+            public:
+                virtual const char* what() const throw() { return "Grade too high"; }
         };
 };
 

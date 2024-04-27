@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 04:32:19 by picatrai          #+#    #+#             */
-/*   Updated: 2024/04/25 19:41:41 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/27 23:22:10 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(void)
 {
     try
     {
-        Bureaucrat Worker = Bureaucrat("David", 5);
+        Bureaucrat Worker = Bureaucrat("David", 10);
         ShrubberyCreationForm A = ShrubberyCreationForm("test");
         RobotomyRequestForm B = RobotomyRequestForm("robo");
         PresidentialPardonForm C = PresidentialPardonForm("president");
@@ -51,7 +51,7 @@ int main(void)
     }
     catch (AForm::NotSignedException& e)
     {
-        // std::cout << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
     }
     return (0);
 }

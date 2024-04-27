@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 06:59:25 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/23 07:26:16 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/27 23:24:48 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ class Intern
         ~Intern();
         
         AForm* makeForm(std::string name, std::string target);
-        
 };
 
 #endif
