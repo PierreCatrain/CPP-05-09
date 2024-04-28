@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 04:28:51 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/24 05:45:41 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/28 06:33:09 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "C.hpp"
 #include <cstdlib>
 #include <ctime>
-#include <typeinfo>
+
 
 Base* generate(void)
 {
@@ -64,7 +64,7 @@ void identify(Base& p)
         (void)a;
         return ;
     }
-    catch (std::bad_cast & e)
+    catch (std::exception & e)
     {
         ;
     }
@@ -76,7 +76,7 @@ void identify(Base& p)
         (void)b;
         return ;
     }
-    catch (std::bad_cast & e)
+    catch (std::exception & e)
     {
         ;
     }
@@ -88,7 +88,7 @@ void identify(Base& p)
         (void)c;
         return ;
     }
-    catch (std::bad_cast & e)
+    catch (std::exception & e)
     {
         ;
     }
