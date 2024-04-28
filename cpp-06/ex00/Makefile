@@ -6,11 +6,11 @@
 #    By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/23 22:45:47 by picatrai          #+#    #+#              #
-#    Updated: 2024/02/24 01:43:17 by picatrai         ###   ########.fr        #
+#    Updated: 2024/04/28 05:30:08 by picatrai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = a.out
+NAME = convert
 CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 SRC = main.cpp ScalarConverter.cpp
