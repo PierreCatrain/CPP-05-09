@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 03:41:39 by picatrai          #+#    #+#             */
-/*   Updated: 2024/02/25 07:53:19 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/04/29 07:10:57 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ARRAY_HPP
 
 # include <exception>
+# include <cstdlib>
 
 template<typename T>
 class Array
@@ -24,29 +25,26 @@ class Array
         
     public :
 
-        Array() : _n(0), _elements(NULL)
+        Array() : _n(0), _elements(new T[0])
         {
         }
 
         Array(unsigned int n) : _n(n), _elements(new T[n])
         {
         }
-
-        Array(const Array& cpy)
+        
+        Array(const Array& cpy) : _elements(new T[0])
         {
             *this = cpy;
         }
-
+        
         Array& operator=(const Array& cpy)
         {
             if (this != &cpy)
             {
-                if (this->_n != cpy._n)
-                {
-                    //delete[] this->_elements;
-                    this->_elements = new T[cpy._n];
-                    this->_n = cpy._n;
-                }
+                delete[] this->_elements;
+                this->_elements = new T[cpy._n];
+                this->_n = cpy._n;
                 for (unsigned int i = 0; i < this->_n; i++)
                     this->_elements[i] = cpy._elements[i];
             }
