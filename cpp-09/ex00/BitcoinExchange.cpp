@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 06:24:32 by picatrai          #+#    #+#             */
-/*   Updated: 2024/05/02 05:08:40 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/05/02 05:17:32 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,6 @@ void BitcoinExchange::HandleLine(const std::string& line, const int index)
             Closest = it;
     }
     std::cout << date << " => " << value  << " = " <<  (std::strtod(value.c_str(), NULL) * Closest->second) << std::endl;
-    std::cout << "for " << Closest->first << std::endl;
 }
 
 void  BitcoinExchange::SetUpDataFile(std::ifstream& file)
