@@ -6,7 +6,7 @@
 #    By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 05:49:06 by picatrai          #+#    #+#              #
-#    Updated: 2024/05/01 09:41:30 by picatrai         ###   ########.fr        #
+#    Updated: 2024/05/02 02:35:31 by picatrai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC = main.cpp BitcoinExchange.cpp
 OBJ = ${SRC:.cpp=.o}
 INCLUDES = BitcoinExchange.hpp
 
-%.o: %.cpp
+%.o: %.cpp ${INCLUDES}
 	${CC} ${CFLAGS} -c -o $@ $<
 
 ${NAME}: ${OBJ}

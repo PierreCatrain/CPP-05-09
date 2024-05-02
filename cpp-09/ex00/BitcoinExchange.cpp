@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 06:24:32 by picatrai          #+#    #+#             */
-/*   Updated: 2024/05/01 11:13:38 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/05/02 05:08:40 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,28 @@ void BitcoinExchange::SetUpFile(std::ifstream& file)
     
     if (!file.is_open())
     {
-        std::cout << "Error: file does not exist" << std::endl;
-        exit(1);
+        std::cout << RED << "Error: file does not exist" << RESET << std::endl;
+        file.close();
+        throw BitcoinExchange::BtcException();
     }
 
     if (file.peek() == std::ifstream::traits_type::eof())
     {
-        std::cout << "Error: file is empty" << std::endl;
-        exit(1);
+        std::cout << RED << "Error: file is empty" << RESET << std::endl;
+        file.close();
+        throw BitcoinExchange::BtcException();
     }
 
     std::getline(file, line);
     if (line != "date | value")
     {
-        std::cout << "Error: invalid file format" << std::endl;
-        exit(1);
+        std::cout << RED << "Error: invalid file format" << RESET << std::endl;
+        file.close();      
+        throw BitcoinExchange::BtcException();
     }
 }
 
-std::string BitcoinExchange::trim(const std::string& str)
+std::string BitcoinExchange::Trim(const std::string& str)
 {
     size_t first = str.find_first_not_of(' ');
     if (std::string::npos == first)
@@ -100,6 +103,9 @@ bool BitcoinExchange::IsDateValid(const std::string& date)
 
     if (yearInt < 2009 || monthInt < 1 || monthInt > 12 || dayInt < 1 || dayInt > 31)
         return (false);
+    
+    if (yearInt == 2009 && monthInt == 1 && dayInt == 1)
+        return (false);
 
     if ((monthInt == 4 || monthInt == 6 || monthInt == 9 || monthInt == 11) && dayInt > 30)
         return (false);
@@ -110,7 +116,7 @@ bool BitcoinExchange::IsDateValid(const std::string& date)
     return (true);
 }
 
-bool BitcoinExchange::IsValueValid(const std::string& value)
+bool BitcoinExchange::IsValueValid(const std::string& value, const int border)
 {   
     if(value.empty())
         return (false);
@@ -126,106 +132,159 @@ bool BitcoinExchange::IsValueValid(const std::string& value)
 
     double valueDouble = std::strtod(value.c_str(), NULL);
 
-    if (valueDouble < 0 || valueDouble > 1000.0)
+    if (valueDouble < 0 || (border == 1 && valueDouble > 1000.0))
         return (false);
     return (true);
 }
 
-// string BitcoinExchange::previousDate(const string& date) {
-//     int year = ft_stoi(date.substr(0, 4));
-//     int month = ft_stoi(date.substr(5, 2));
-//     int day = ft_stoi(date.substr(8, 2));
+bool BitcoinExchange::IsOlder(const std::string mapDate, const std::string date)
+{
 
-//     // Days in each month (for non-leap years)
-//     int daysInMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int date_year = std::atoi((date.substr(0, 4)).c_str());
+    int date_month = std::atoi((date.substr(5, 2)).c_str());
+    int date_day = std::atoi((date.substr(8, 2)).c_str());
 
-//     if (isLeapYear(year)) {
-//         daysInMonth[2] = 29; // February has 29 days in a leap year
-//     }
+    int mapDate_year = std::atoi((mapDate.substr(0, 4)).c_str());
+    int mapDate_month = std::atoi((mapDate.substr(5, 2)).c_str());
+    int mapDate_day = std::atoi((mapDate.substr(8, 2)).c_str());
 
-//     // Decrement the day
-//     day--;
+    if (mapDate_year < date_year)
+        return (true);
+    if (mapDate_year <= date_year && mapDate_month < date_month)
+        return (true);
+    if (mapDate_year <= date_year && mapDate_month <= date_month && mapDate_day <= date_day)
+        return (true);
+     
+    return (false);
+}
 
-//     // Check if day is 0 (previous month)
-//     if (day == 0) {
-//         month--;
-
-//         // Check if month is 0 (December)
-//         if (month == 0) {
-//             month = 12;
-//             year--;
-//         }
-
-//         day = daysInMonth[month];
-//     }
-
-//     // Format the previous date
-//     string newYear = ft_to_string(year);
-//     string newMonth = (month < 10) ? "0" + ft_to_string(month) : ft_to_string(month);
-//     string newDay = (day < 10) ? "0" + ft_to_string(day) : ft_to_string(day);
-
-//     return newYear + "-" + newMonth + "-" + newDay;
-// }
-
-void BitcoinExchange::HandleLine(const std::string& line)
+void BitcoinExchange::HandleLine(const std::string& line, const int index)
 {
     size_t delim = line.find('|');
     if (delim == std::string::npos)
     {
-        std::cout << "Error: bad input => " << line << std::endl;
+        std::cout << RED << "Error: (line " << index << ") bad input => " << line << RESET << std::endl;
         return ;
     }
-    std::string date = trim(line.substr(0, delim));
-    std::string value = trim(line.substr(delim + 1));
+    std::string date = Trim(line.substr(0, delim));
+    std::string value = Trim(line.substr(delim + 1));
 
     if (this->IsDateValid(date) == false)
     {
         if (date.empty())
-            std::cout << "Error: invalid date" << std::endl;
+            std::cout << RED << "Error: (line " << index << ") invalid date" << RESET << std::endl;
         else
-            std::cout << "Error: invalid date => " << date << std::endl;
+            std::cout << RED << "Error: (line " << index << ") invalid date => " << date << RESET << std::endl;
         return ;
     }
 
-    if (this->IsValueValid(value) == false)
+    if (this->IsValueValid(value, 1) == false)
     {
         if (value.empty())
-            std::cout << "Error: invalid value" << std::endl;
+            std::cout << RED << "Error: (line " << index << ") invalid value" << RESET << std::endl;
         else
-            std::cout << "Error: invalid value => " << value << std::endl;
+            std::cout << RED << "Error: (line " << index << ") invalid value => " << value << RESET << std::endl;
         return ;
     }
-    try
+    
+    std::map<std::string, double>::iterator Closest = this->_map.begin();
+    for (std::map<std::string, double>::iterator it = this->_map.begin(); it != this->_map.end(); it++)
     {
-        std::map<std::string, std::string>::iterator it;
-        std::string prevDate = date;
-        it = this->_map.find(date);
-        
-        // std::cout << *it << std::endl;
-        // while (it == this->_map.end())
-        // {
-        //     const std::string& currentDate = prevDate;
-        //     prevDate = previousDate(currentDate);
-        //     it = this->_map.find(prevDate);
-        // }
-
-        // std::cout << date << " => " << value  << " = "
-        //     << ft_stod(it->second) * ft_stod(value) << std::endl;
-
+        if (this->IsOlder(it->first, date))
+            Closest = it;
     }
-    catch (std::exception & e) {}
+    std::cout << date << " => " << value  << " = " <<  (std::strtod(value.c_str(), NULL) * Closest->second) << std::endl;
+    std::cout << "for " << Closest->first << std::endl;
 }
 
+void  BitcoinExchange::SetUpDataFile(std::ifstream& file)
+{
+    std::string line;
+    
+    if (!file.is_open())
+    {
+        std::cout << RED << "Error: datafile does not exist" << RESET << std::endl;
+        file.close();
+        throw BitcoinExchange::BtcException();
+    }
+
+    if (file.peek() == std::ifstream::traits_type::eof())
+    {
+        std::cout << RED << "Error: datafile is empty" << RESET << std::endl;
+        file.close();
+        throw BitcoinExchange::BtcException();
+    }
+
+    std::getline(file, line);
+    if (line != "date,exchange_rate")
+    {
+        std::cout << RED << "Error: invalid datafile format" << RESET << std::endl;
+        file.close();
+        throw BitcoinExchange::BtcException();
+    }
+}
+
+void BitcoinExchange::HandleDataLine(const std::string& line, const int index, std::ifstream& file)
+{
+    size_t delim = line.find(',');
+    if (delim == std::string::npos)
+    {
+        std::cout << RED << "Error: line " << index << " is invalid in datafile" << RESET << std::endl;
+        file.close();
+        throw BitcoinExchange::BtcException();
+    }
+    std::string date = line.substr(0, delim);
+    std::string value = line.substr(delim + 1);
+
+    if (this->IsDateValid(date) == false)
+    {
+        std::cout << RED << "Error: line " << index << " is invalid in datafile" << RESET << std::endl;
+        file.close();
+        throw BitcoinExchange::BtcException();
+    }
+
+    if (this->IsValueValid(value, 0) == false)
+    {
+        std::cout << RED << "Error: line " << index << " is invalid in datafile" << RESET << std::endl;
+        file.close();
+        throw BitcoinExchange::BtcException();
+    }
+    this->_map.insert(std::make_pair(date, std::strtod(value.c_str(), NULL)));
+}
+
+void BitcoinExchange::GetData()
+{
+    std::ifstream   file("data.csv");
+    std::string line;
+    int index = 2;
+
+    this->_map.clear();
+    this->SetUpDataFile(file);
+    while (std::getline(file, line))
+    {
+        this->HandleDataLine(line, index, file);
+        index++;
+    }
+    file.close();
+}
 
 void BitcoinExchange::Exchange(const std::string& filename)
 {
-    std::ifstream   file(filename.c_str());
-    std::string line;
-    
-    this->SetUpFile(file);
-    while (std::getline(file, line))
+    try
     {
-        this->HandleLine(line);
+        std::ifstream   file(filename.c_str());
+        std::string     line;
+        int index;
+
+        this->GetData();
+        this->SetUpFile(file);
+        index = 2;
+        while (std::getline(file, line))
+        {
+            this->HandleLine(line, index);
+            index++;
+        }
+        file.close();
     }
-    file.close();
+    catch(BitcoinExchange::BtcException& e) {}
 }
