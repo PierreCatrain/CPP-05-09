@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 06:58:27 by picatrai          #+#    #+#             */
-/*   Updated: 2024/05/02 08:25:47 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/05/02 09:11:46 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,5 @@ void RPN::Calcul(const std::string str)
         else
             std::cout << GREEN << "RES => " << this->_stack.top() << RESET << std::endl;
     }
-    catch(RPN::RPNexception& e) {}
+    catch (RPN::RPNexception& e) {}
 }

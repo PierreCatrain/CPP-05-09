@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 06:24:32 by picatrai          #+#    #+#             */
-/*   Updated: 2024/05/02 05:17:32 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/05/02 09:11:49 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,5 +285,5 @@ void BitcoinExchange::Exchange(const std::string& filename)
         }
         file.close();
     }
-    catch(BitcoinExchange::BtcException& e) {}
+    catch (BitcoinExchange::BtcException& e) {}
 }
