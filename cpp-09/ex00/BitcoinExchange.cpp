@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 06:24:32 by picatrai          #+#    #+#             */
-/*   Updated: 2024/05/02 09:11:49 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/10/04 09:47:54 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ BitcoinExchange::~BitcoinExchange()
 void BitcoinExchange::SetUpFile(std::ifstream& file)
 {
     std::string line;
-    
+
     if (!file.is_open())
     {
         std::cout << RED << "Error: file does not exist" << RESET << std::endl;
@@ -110,7 +110,7 @@ bool BitcoinExchange::IsDateValid(const std::string& date)
     if ((monthInt == 4 || monthInt == 6 || monthInt == 9 || monthInt == 11) && dayInt > 30)
         return (false);
 
-    if (monthInt == 2 && ((yearInt % 4 == 0 && dayInt > 29) || (yearInt % 4 != 0 && dayInt > 28)))
+    if (monthInt == 2 && (((yearInt % 400 == 0 || (yearInt % 4 == 0 && yearInt % 100 != 0)) && dayInt > 29) || (!(yearInt % 400 == 0 || (yearInt % 4 == 0 && yearInt % 100 != 0)) && dayInt > 28)))
         return (false);
 
     return (true);
@@ -126,7 +126,7 @@ bool BitcoinExchange::IsValueValid(const std::string& value, const int border)
         if (value.find('.') == 0 || value.find('.') == value.size() - 1 || std::find(value.begin() + value.find('.') + 1, value.end(), '.') != value.end())
             return (false);
     }
-    
+
     if (!IsOnly(value, "0123456789."))
         return (false);
 

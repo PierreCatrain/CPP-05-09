@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 08:42:16 by picatrai          #+#    #+#             */
-/*   Updated: 2024/05/04 09:23:07 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/11/02 12:43:57 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ class PmergeMe
         bool IsOnly(const std::string str, const std::string charset);
         void IsDuplicate();
         void PrintTime(const double vector_time, const double list_time);
+        size_t ft_jacobsthal(size_t lap);
+        void ft_select_value_with_jacobsthal(size_t jacob, std::vector<int> high, std::vector<int> main, size_t *idx_in_high, size_t *idx_in_main);
  
         void PrintVector(std::vector<int> v, std::string str);
-        void DichotomieSearchVector(std::vector<int>& vector, const int value, std::vector<int>::iterator it, int coef);
+        void DichotomieSearchVector(std::vector<int>& vector, const int value, std::vector<int>::iterator it, int coef, std::vector<int>& main);
         std::vector<int> SortVector(std::vector<int> vector);
 
         void PrintList(std::list<int> l, std::string str);

@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 08:42:10 by picatrai          #+#    #+#             */
-/*   Updated: 2024/05/04 09:20:33 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/11/02 12:59:30 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,19 +140,21 @@ void PmergeMe::PrintVector(std::vector<int> v, std::string str)
     std::cout << std::endl;
 }
 
-void PmergeMe::DichotomieSearchVector(std::vector<int>& vector, const int value, std::vector<int>::iterator it, int coef)
+void PmergeMe::DichotomieSearchVector(std::vector<int>& vector, const int value, std::vector<int>::iterator it, int coef, std::vector<int>& main)
 {
     if (vector.size() == 1)
     {
         if (*it > value)
         {
             vector.insert(it, value);
+            // main.insert(it, value); trouver l'iterrateur equivalent grace a une fonction
             throw FindDichotomie();
         }
         else
         {
             it = vector.end();
             vector.insert(it, value);
+            // main.insert(it, value);
             throw FindDichotomie();
         }
     }
@@ -162,6 +164,7 @@ void PmergeMe::DichotomieSearchVector(std::vector<int>& vector, const int value,
         if (vector.size() / coef == 0 && it == vector.begin())
         {
             vector.insert(vector.begin(), value);
+            main.insert(vector.begin(), value);
             throw FindDichotomie();
         }
         else if (vector.size() / coef == 0)
@@ -170,7 +173,7 @@ void PmergeMe::DichotomieSearchVector(std::vector<int>& vector, const int value,
         }
         else
             it -= vector.size() / coef;
-        this->DichotomieSearchVector(vector, value, it, coef);
+        this->DichotomieSearchVector(vector, value, it, coef, main);
     }
     else if (*it < value && *(it - 1) < value)
     {
@@ -178,6 +181,7 @@ void PmergeMe::DichotomieSearchVector(std::vector<int>& vector, const int value,
         if (vector.size() / coef == 0 && it == vector.end() - 1)
         {
             vector.insert(vector.end(), value);
+            main.insert(vector.end(), value);
             throw FindDichotomie();
         }
         else if (vector.size() / coef == 0)
@@ -186,10 +190,51 @@ void PmergeMe::DichotomieSearchVector(std::vector<int>& vector, const int value,
         }
         else
             it += vector.size() / coef;
-        this->DichotomieSearchVector(vector, value, it, coef);
+        this->DichotomieSearchVector(vector, value, it, coef, main);
     }
     vector.insert(it, value);
+    main.insert(it, value);
     throw FindDichotomie();
+}
+
+size_t PmergeMe::ft_jacobsthal(size_t lap)
+{
+    if (lap == 1)
+        return 1;
+    size_t new_val = 0;
+    size_t old_val = 1;
+    size_t old_old_val = 0;
+    while (lap > new_val)
+    {
+        new_val = old_val + 2 * old_old_val;
+        old_old_val = old_val;
+        old_val = new_val;
+    }
+    return (new_val - (lap - old_old_val) + 1);
+}
+
+void PmergeMe::ft_select_value_with_jacobsthal(size_t jacob, std::vector<int> high, std::vector<int> main, size_t *idx_in_high, size_t *idx_in_main)
+{
+    size_t count = 0;
+    for (std::vector<int>::iterator it = main.begin(); it != main.end(); it++)
+    {
+        if (std::find(high.begin(), high.end(), *it) != high.end())
+        {
+            if (++count == jacob)
+            {
+                for (std::vector<int>::iterator it2 = high.begin(); it2 != high.end(); it2++)
+                {
+                    if (*it2 == *it)
+                    {
+                        std::cout << "ici " << (*idx_in_high) << std::endl;
+                        return ;
+                    }
+                    (*idx_in_high)++;
+                }
+            }
+        }
+        (*idx_in_main)++;
+    }
 }
 
 std::vector<int> PmergeMe::SortVector(std::vector<int> v)
@@ -222,24 +267,39 @@ std::vector<int> PmergeMe::SortVector(std::vector<int> v)
         main = high;
     std::vector<int>::iterator it2 = main.begin();
     it2 += main.size() / 2;
+    size_t lap = 1;
+    std::vector <int> tmp_low = low;
     while (low.size())
     {
-        it2 = main.begin();
-        it2 += main.size() / 2;
         try
         {
-            this->DichotomieSearchVector(main, *(low.begin()), it2, 2);
-            
+            // inserer dans l'ordre le perdant du plus petit de high puis le perdant du deuxieme plus petit de high avec un vecteur minimaliste a chaque fois
+            size_t jacobsthal = this->ft_jacobsthal(lap);
+            size_t idx_value_to_insert_low = 0;
+            size_t idx_value_to_insert_main = 0;
+            this->ft_select_value_with_jacobsthal(jacobsthal, high, main, &idx_value_to_insert_low, &idx_value_to_insert_main);
+            std::vector<int> minimal_vector;
+            std::cout << "test " << idx_value_to_insert_main << " et " << idx_value_to_insert_low << " et " << low[0] << std::endl;
+            for (size_t i = 0; i <= idx_value_to_insert_main && i < main.size(); i++) {
+                minimal_vector.push_back(i);
+                std::cout << "test " << i << std::endl;
+            }
+            it2 = minimal_vector.begin();
+            it2 += minimal_vector.size() / 2;
+            std::cout << "sorti " << tmp_low[idx_value_to_insert_low] << std::endl;
+            this->DichotomieSearchVector(minimal_vector, tmp_low[idx_value_to_insert_low], it2, 2, main);
+            std::cout << "ici\n";
         }
         catch(PmergeMe::FindDichotomie& e) {}
         low.erase(low.begin());
+        lap++;
     }
     it2 = main.begin();
     it2 += main.size() / 2;
     try
     {
         if (odd != -1)
-            this->DichotomieSearchVector(main, odd, it2, 2);
+            this->DichotomieSearchVector(main, odd, it2, 2, main);
     }
     catch(PmergeMe::FindDichotomie& e) {}
     return (main);
