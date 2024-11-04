@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 08:42:10 by picatrai          #+#    #+#             */
-/*   Updated: 2024/11/03 10:50:15 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/11/04 08:06:24 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ void PmergeMe::DichotomieSearchVector(std::vector<int>& vector, const int value,
             it = vector.end();
             std::cout << "3\n";
             main.insert(main.end(), value);
-            std::cout << "4\n";
+            std::cout << "4 \n";
             throw FindDichotomie();
         }
     }
