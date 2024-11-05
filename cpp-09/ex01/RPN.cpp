@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 06:58:27 by picatrai          #+#    #+#             */
-/*   Updated: 2024/05/02 09:11:46 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/11/05 06:52:58 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ void RPN::do_op(const char c)
         std::cout << RED << "Error: you tried to do an opp while having less than 2 numbers on the stack" << RESET << std::endl;
         throw RPN::RPNexception();
     }
-    
+
     nb2 = this->_stack.top();
     this->_stack.pop();
     nb1 = this->_stack.top();
     this->_stack.pop();
-    
+
     for (int index = 0; index < 4; index++)
     {
         if (opp[index] == c)
@@ -105,7 +105,6 @@ void RPN::do_op(const char c)
         throw RPN::RPNexception();
     }
     this->_stack.push(static_cast<int>(res));
-    
 }
 
 void RPN::Calcul(const std::string str)
