@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 08:42:10 by picatrai          #+#    #+#             */
-/*   Updated: 2024/11/05 05:44:31 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/11/05 07:01:40 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -518,7 +518,7 @@ void PmergeMe::Sort(char **arg)
         std::clock_t start;
         this->GetData(arg);
         this->PrintVector(this->_vector, "Before:   ");
-        this->PrintList(this->_list, "Before:   ");
+        // this->PrintList(this->_list, "Before:   ");
         
         
         start = std::clock();
@@ -535,7 +535,7 @@ void PmergeMe::Sort(char **arg)
 
 
         this->PrintVector(this->_vector, "After:    ");
-        this->PrintList(this->_list, "After:    ");
+        // this->PrintList(this->_list, "After:    ");
         this->PrintTime(vector_time, list_time);
     }
     catch (PmergeMe::PmergeMeException& e) {}
