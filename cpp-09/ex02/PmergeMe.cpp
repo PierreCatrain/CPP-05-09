@@ -6,7 +6,7 @@
 /*   By: picatrai <picatrai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 08:42:10 by picatrai          #+#    #+#             */
-/*   Updated: 2024/11/04 08:06:24 by picatrai         ###   ########.fr       */
+/*   Updated: 2024/11/05 05:44:31 by picatrai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,33 +171,26 @@ std::vector<int>::iterator PmergeMe::good_iterateur_vector(int value, std::vecto
 
 void PmergeMe::DichotomieSearchVector(std::vector<int>& vector, const int value, std::vector<int>::iterator it, int coef, std::vector<int>& main)
 {
-    std::cout << RED << "test\n" << RESET;
     if (vector.size() == 1)
     {
         if (*it > value)
         {
-            std::cout << "1\n";
             main.insert(this->good_iterateur_vector(*it, main), value);
-            std::cout << "2\n";
             throw FindDichotomie();
         }
         else
         {
             it = vector.end();
-            std::cout << "3\n";
             main.insert(main.end(), value);
-            std::cout << "4 \n";
             throw FindDichotomie();
         }
     }
-    if (*it > value && *(it - 1) > value)
+    if (*it > value && it != vector.begin() && *(it - 1) > value)
     {
         coef *= 2;
         if (vector.size() / coef == 0 && it == vector.begin())
         {
-            std::cout << "5\n";
             main.insert(this->good_iterateur_vector(*vector.begin(), main), value);
-            std::cout << "6\n";
             throw FindDichotomie();
         }
         else if (vector.size() / coef == 0)
@@ -213,9 +206,7 @@ void PmergeMe::DichotomieSearchVector(std::vector<int>& vector, const int value,
         coef *= 2;
         if (vector.size() / coef == 0 && it == vector.end() - 1)
         {
-            std::cout << "7\n";
             main.insert(main.end(), value);
-            std::cout << "8\n";
             throw FindDichotomie();
         }
         else if (vector.size() / coef == 0)
@@ -226,9 +217,7 @@ void PmergeMe::DichotomieSearchVector(std::vector<int>& vector, const int value,
             it += vector.size() / coef;
         this->DichotomieSearchVector(vector, value, it, coef, main);
     }
-    std::cout << "9\n";
     main.insert(this->good_iterateur_vector(*it, main), value);
-    std::cout << "10\n";
     throw FindDichotomie();
 }
 
@@ -392,7 +381,7 @@ void PmergeMe::DichotomieSearchList(std::list<int>& list, const int value, std::
             throw FindDichotomie();
         }
     }
-    if (*it > value && *(it - 1) > value)
+    if (*it > value && it != list.begin() && *(it - 1) > value)
     {
         coef *= 2;
         if (list.size() / coef == 0 && it == list.begin())
@@ -481,17 +470,32 @@ std::list<int> PmergeMe::SortList(std::list<int> l)
         main = high;
     std::list<int>::iterator it2 = main.begin();
     it2 += main.size() / 2;
+    size_t lap = 1;
+    std::list <int> tmp_low = low;
     while (low.size())
     {
-        it2 = main.begin();
-        it2 += main.size() / 2;
         try
         {
+            size_t jacobsthal = this->ft_jacobsthal(lap, high.size());
+            size_t idx_value_to_insert_low = 0;
+            size_t idx_value_to_insert_main = 0;
+            this->ft_select_value_with_jacobsthal_list(jacobsthal, high, main, &idx_value_to_insert_low, &idx_value_to_insert_main);
+            std::list<int> minimal_list;
+            size_t i = 0;
+            for (std::list<int>::iterator it = main.begin(); it != main.end() && i < idx_value_to_insert_main + 2; it++, i++) {
+                minimal_list.push_back(*it);
+            }
+            // for (size_t i = 0; i <= idx_value_to_insert_main + 1 && i < main.size(); i++) {
+            //     minimal_list.push_back(main[i]);
+            // }
+            it2 = main.begin();
+            it2 += main.size() / 2;
             this->DichotomieSearchList(main, *(low.begin()), it2, 2);
             
         }
         catch(PmergeMe::FindDichotomie& e) {}
         low.erase(low.begin());
+        lap++;
     }
     it2 = main.begin();
     it2 += main.size() / 2;
@@ -514,7 +518,7 @@ void PmergeMe::Sort(char **arg)
         std::clock_t start;
         this->GetData(arg);
         this->PrintVector(this->_vector, "Before:   ");
-        // this->PrintList(this->_list, "Before:   ");
+        this->PrintList(this->_list, "Before:   ");
         
         
         start = std::clock();
@@ -531,7 +535,7 @@ void PmergeMe::Sort(char **arg)
 
 
         this->PrintVector(this->_vector, "After:    ");
-        // this->PrintList(this->_list, "After:    ");
+        this->PrintList(this->_list, "After:    ");
         this->PrintTime(vector_time, list_time);
     }
     catch (PmergeMe::PmergeMeException& e) {}
